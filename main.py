@@ -1,0 +1,53 @@
+def main():    
+    book_content = get_book_content()
+    
+    word_count = get_word_count(book_content)
+    print(word_count)
+
+    char_dict = char_count(book_content)
+    print(char_dict)
+
+def get_book_content():
+    with open("books/frankenstein.txt") as f:
+        book_content = f.read()
+        return book_content
+
+def get_word_count(text):
+    split_arr = text.split()
+    word_count = len(split_arr)
+    return word_count
+
+def char_count(text):
+    char_dict = {}
+
+    def filter_string(arr):
+        filtered_list = []
+        split = list(arr)
+        for i in split:
+            if i.isalpha():
+                filtered_list.append(i.lower())
+        return filtered_list
+    
+    def is_char_in_dict(char):
+        return char in char_dict.keys()
+
+    text_arr = text.split()
+    for word in text_arr:
+        #print(word)
+        filtered_word_arr = filter_string(word)
+        #print(filtered_word) #["t","o"]
+        
+        if len(filtered_word_arr)==0:
+            continue
+
+        for char in filtered_word_arr:
+            if is_char_in_dict(char):
+                char_dict[char] = char_dict[char] + 1
+            else:
+                char_dict[char] = 1
+
+
+    return char_dict
+ 
+
+main()
